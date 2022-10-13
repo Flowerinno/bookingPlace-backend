@@ -16,7 +16,7 @@ export const register = async (req, res, next) => {
 		});
 		//saving new user to mongo
 		await newUser.save();
-		//status 200 - success , 201 successfully logged in
+		//status 200 - success , 201 successfully logged in/registered
 		return res.status(201).send("User has been registered");
 	} catch (err) {
 		next(err);

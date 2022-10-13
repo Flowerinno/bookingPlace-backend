@@ -1,22 +1,35 @@
 import express from "express";
 import {
+	countByCity,
 	createHotel,
 	deleteHotel,
 	getAllHotels,
 	getHotel,
 	updateHotel,
+	countByType,
 } from "../contollers/hotel.js";
-
+import { verifyAdmin } from "../utils/verifyToken.js";
 const router = express.Router();
 //CREATE
-router.post("/", createHotel);
+router.post("/", verifyAdmin, createHotel);
+
 // UPDATE
-router.put("/:id", updateHotel);
+router.put("/:id", verifyAdmin, updateHotel);
+
 //DELETE
-router.delete("/:id", deleteHotel);
+router.delete("/:id", verifyAdmin, deleteHotel);
+
 //GET
-router.get("/:id", getHotel);
+router.get("/find/:id", getHotel);
+
 //GET ALL
 router.get("/", getAllHotels);
+
+//get list of cities
+router.get("/countByCity", countByCity);
+
+//get list of types (apartment,cabin,villa, hotel etc...)
+
+router.get("/countByType", countByType);
 
 export default router;

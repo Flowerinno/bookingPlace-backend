@@ -8,7 +8,7 @@ export const verifyToken = (req, res, next) => {
 	if (!token) {
 		return next(createError(401, "You are not authenticated"));
 	}
-	//jsonwebtoken verifies the user token , jwt_secret is a must property for jwt 
+	//jsonwebtoken verifies the user token , jwt_secret is a must property for jwt
 	// if error => next() ; if token is valid => creating a new property req.user = user => calling next() to go to the next step;
 	jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
 		if (err) {
@@ -22,12 +22,23 @@ export const verifyToken = (req, res, next) => {
 
 export const verifyUser = (req, res, next) => {
 	//firstly verifies user token; if user.id mathes req.params.id or req.user.isAdmin
-	// calling next() to go to the next step else => throw error
-	verifyToken(req, res, () => {
+	// calling next() to go to the next step, else => throw error
+	verifyToken(req, res, next, () => {
 		if (req.user.id === req.params.id || req.user.isAdmin) {
 			next();
 		} else {
 			return next(createError(403, "You are not authorized"));
+		}
+	});
+};
+
+export const verifyAdmin = (req, res, next) => {
+	//checks if user is administrator
+	verifyToken(req, res, next, () => {
+		if (req.user.isAdmin) {
+			next();
+		} else {
+			return next(createError(403, "You are not administrator"));
 		}
 	});
 };
