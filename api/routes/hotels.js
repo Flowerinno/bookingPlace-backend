@@ -7,6 +7,7 @@ import {
 	getHotel,
 	updateHotel,
 	countByType,
+	getHotelRooms,
 } from "../contollers/hotel.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
 const router = express.Router();
@@ -32,4 +33,5 @@ router.get("/countByCity", countByCity);
 
 router.get("/countByType", countByType);
 
+router.get("/room/:id", getHotelRooms);
 export default router;
