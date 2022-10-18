@@ -45,14 +45,14 @@ export const login = async (req, res, next) => {
 			process.env.JWT_SECRET
 		);
 			//desctucturing all info without password and isAdmin properties for security purposes 
-			// sending them back to frontend
+			// sending them back to client
 		const { password, isAdmin, ...otherDetails } = user._doc;
 		return res
 			.cookie("access_token", token, {
 				httpOnly: true,
 			})
 			.status(201)
-			.json({ ...otherDetails });
+			.json({ details: { ...otherDetails }, isAdmin });
 	} catch (err) {
 		next(err);
 	}
