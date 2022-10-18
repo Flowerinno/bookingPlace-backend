@@ -11,7 +11,7 @@ const app = express();
 //dotenv module required to use .env file
 dotenv.config();
 
-const PORT = 8000;
+const PORT = process.env.URL || 8000;
 //connection to mongoDB via mongoose
 const connect = async () => {
 	try {
