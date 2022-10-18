@@ -26,5 +26,8 @@ router.get("/:id", verifyUser, getUser);
 //GET ALL
 router.get("/", verifyAdmin, getAllUsers);
 
+router.get("/test", (req, res) => {
+	res.json("some data here");
+});
 
 export default router;
